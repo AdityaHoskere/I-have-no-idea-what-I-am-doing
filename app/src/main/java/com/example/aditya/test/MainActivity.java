@@ -5,13 +5,41 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
 public class MainActivity extends ActionBarActivity {
-
+    EditText someNote;
+    Button save;
+    Button openRecent;
+    Realm realm;
+    RealmList<Note> rList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        someNote = (EditText) findViewById(R.id.editText);
+        save = (Button) findViewById(R.id.button);
+        openRecent = (Button) findViewById(R.id.button2);
+        save.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                realm.beginTransaction();
+                Note n = new Note(someNote.getText());
+                n = realm.createObject(Note.class);
+                rList.add(n);
+                realm.commitTransaction();
+
+
+            }
+        });
+        openRecent.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+
+            }
+        });
+    }
+
+    MainActivity() {
+        realm = Realm.getInstance(this);
+        rList = new RealmList<>();
     }
 
 
